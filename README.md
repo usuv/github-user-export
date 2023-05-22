@@ -36,26 +36,21 @@ GitHub User Export is a Java Spring Boot application that allows you to search a
 
 ## API Endpoints
 
-- **Search and Export Users:**
-  - POST /api/users/export
+- **Search Users:**
+  - GET /users?query=Q
+
+- **Export Users:**
+  - GET /users/export?query=Q
 
 - **List Export History:**
-  - GET /api/export-history
+  - GET /export-history
 
 - **Download Exported PDF:**
-  - GET /api/export-history/{id}/download
+  - GET /download/{id}
 
 ## Configuration
 
 The application can be configured by modifying the `application.properties` file located in the `src/main/resources` directory. You can update the database connection details, server port, and other properties as needed.
-
-## Contributing
-
-Contributions are welcome! If you find any issues or would like to add new features, please feel free to open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License.
 
 ## Acknowledgements
 
