@@ -13,14 +13,11 @@ import com.maybank.yusuf.services.GithubService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Resource;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -63,12 +60,10 @@ public class UserController {
         byte[] pdfBytes = exportService.generatePdf(users);
         String fileName = "users_export_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".pdf";
 
-        // Save export history
         ExportHistory exportHistory = new ExportHistory();
         exportHistory.setFileName(fileName);
         exportHistory.setFilePath(fileName);
         exportHistory.setTimestamp(LocalDateTime.now());
-        // Set other relevant fields
         exportHistoryRepository.save(exportHistory);
 
         HttpHeaders headers = new HttpHeaders();
@@ -88,10 +83,8 @@ public class UserController {
         if (exportHistory.isPresent()) {
             String filePath = exportHistory.get().getFilePath();
 
-            // Read the PDF file from the file system or storage
             File pdfFile = new File(filePath);
             if (pdfFile.exists()) {
-                // Create an InputStreamResource from the PDF file data
                 InputStreamResource resource = new InputStreamResource(new FileInputStream(pdfFile)) {
                     @Override
                     public String getFilename() {
@@ -99,7 +92,6 @@ public class UserController {
                     }
                 };
 
-                // Set the headers and return the ResponseEntity with the PDF resource
                 HttpHeaders headers = new HttpHeaders();
                 headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=export.pdf");
 

@@ -9,15 +9,11 @@ import com.maybank.yusuf.models.ExportHistory;
 import com.maybank.yusuf.models.User;
 import com.maybank.yusuf.repositories.ExportHistoryRepository;
 import com.maybank.yusuf.repositories.UserRepository;
-import com.sun.rowset.internal.Row;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -25,13 +21,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -56,7 +46,6 @@ public class ExportService {
 
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-        // Set font and font size
         PDType1Font fontBold = PDType1Font.HELVETICA_BOLD;
         PDType1Font fontNormal = PDType1Font.HELVETICA;
         
@@ -76,7 +65,6 @@ public class ExportService {
         int end = Math.min(users.size(), start + rowsPerPage);
 
         while (start < users.size()) {
-            // Draw table headers
             contentStream.setFont(fontBold, fontSize);
             contentStream.beginText();
             contentStream.newLineAtOffset(margin, yPosition);
@@ -91,7 +79,6 @@ public class ExportService {
 
             yPosition -= cellHeight;
 
-            // Draw table rows
             contentStream.setFont(fontNormal, fontSize);
             for (int i = start; i < end; i++) {
                 User user = users.get(i);
@@ -111,7 +98,6 @@ public class ExportService {
 
             contentStream.stroke();
 
-            // Move to the next page if necessary
             if (end < users.size()) {
                 contentStream.close();
                 page = new PDPage();

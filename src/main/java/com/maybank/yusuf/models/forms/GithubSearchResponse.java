@@ -5,7 +5,6 @@
  */
 package com.maybank.yusuf.models.forms;
 
-import com.maybank.yusuf.models.forms.GithubUser;
 import java.util.List;
 import java.util.Objects;
 
