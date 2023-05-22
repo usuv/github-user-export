@@ -38,6 +38,8 @@ GitHub User Export is a Java Spring Boot application that allows you to search a
 
 - **Search Users:**
   - GET /users?query=Q
+  ![image](https://github.com/usuv/github-user-export/assets/45777644/34d33475-df73-48cb-bca0-22839ea3bce2)
+
 
 - **Export Users:**
   - GET /users/export?query=Q
